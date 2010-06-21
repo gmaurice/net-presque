@@ -1,0 +1,99 @@
+package Net::Presque;
+
+use MooseX::Net::API;
+
+net_api_declare presque => (
+    api_format      => 'json',
+    api_format_mode => 'append',
+);
+
+net_api_method fetch_job => (
+    method   => 'GET',
+    path     => '/q/:queue_name',
+    params   => [qw/queue_name worker_id/],
+    required => [qw/queue_name/],
+);
+
+net_api_method create_job => (
+    method   => 'POST',
+    path     => '/q/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method reset_queue => (
+    method   => 'DELETE',
+    path     => '/q/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method job_as_failed => (
+    method   => 'PUT',
+    path     => '/q/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method queue_info => (
+    method   => 'GET',
+    path     => '/j/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method queue_status => (
+    method   => 'GET',
+    path     => '/control/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method change_queue_status => (
+    method   => 'POST',
+    path     => '/control/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method queue_size => (
+    method   => 'GET',
+    path     => '/status/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method worker_stats => (
+    method   => 'GET',
+    path     => '/w/:worker_id',
+    params   => [qw/worker_id/],
+    required => [qw/worker_id/],
+);
+
+net_api_mehod workers_stats => (
+    method => 'GET',
+    path   => '/w/',
+);
+
+net_api_method queue_stats => (
+    method   => 'GET',
+    path     => '/w/:queue_name',
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
+);
+
+net_api_method register_worker => (
+    method   => 'POST',
+    path     => '/w/:queue_name',
+    params   => [qw/queue_name worker_id/],
+    required => [qw/queue_name worker_id/],
+);
+
+net_api_method unregister_worker => (
+    method   => 'DELETE',
+    path     => '/w/:queue_name',
+    params   => [qw/queue_name worker_id/],
+    required => [qw/queue_name worker_id/],
+);
+
+1;
