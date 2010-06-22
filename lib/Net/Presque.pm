@@ -4,7 +4,7 @@ use MooseX::Net::API;
 
 net_api_declare presque => (
     api_format      => 'json',
-    api_format_mode => 'append',
+    api_format_mode => 'content-type',
 );
 
 net_api_method fetch_job => (
@@ -16,6 +16,7 @@ net_api_method fetch_job => (
 
 net_api_method create_job => (
     method   => 'POST',
+    strict   => 0,
     path     => '/q/:queue_name',
     params   => [qw/queue_name/],
     required => [qw/queue_name/],
@@ -28,8 +29,9 @@ net_api_method reset_queue => (
     required => [qw/queue_name/],
 );
 
-net_api_method job_as_failed => (
+net_api_method failed_job => (
     method   => 'PUT',
+    strict   => 0,
     path     => '/q/:queue_name',
     params   => [qw/queue_name/],
     required => [qw/queue_name/],
@@ -70,7 +72,7 @@ net_api_method worker_stats => (
     required => [qw/worker_id/],
 );
 
-net_api_mehod workers_stats => (
+net_api_method workers_stats => (
     method => 'GET',
     path   => '/w/',
 );
