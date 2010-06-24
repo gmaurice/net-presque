@@ -14,12 +14,29 @@ net_api_method fetch_job => (
     required => [qw/queue_name/],
 );
 
-net_api_method create_job => (
-    method   => 'POST',
-    strict   => 0,
-    path     => '/q/:queue_name',
-    params   => [qw/queue_name/],
+net_api_method fetch_jobs => (
+    method   => 'GET',
+    path     => '/qb/:queue_name',
+    params   => [qw/queue_name worker_id batch_size/],
     required => [qw/queue_name/],
+);
+
+net_api_method create_job => (
+    method        => 'POST',
+    strict        => 0,
+    path          => '/q/:queue_name',
+    params_in_url => [qw/delayed uniq/],
+    params        => [qw/queue_name/],
+    required      => [qw/queue_name/],
+);
+
+net_api_method create_jobs => (
+    method        => 'POST',
+    strict        => 0,
+    path          => '/qb/:queue_name',
+    params_in_url => [qw/delayed/],
+    params        => [qw/queue_name jobs/],
+    required      => [qw/queue_name jobs/],
 );
 
 net_api_method reset_queue => (
