@@ -2,6 +2,8 @@ package Net::Presque;
 
 use MooseX::Net::API;
 
+has worker_id => (is => 'rw', isa => 'Str', predicate => 'has_worker_id');
+
 net_api_declare presque => (
     api_format      => 'json',
     api_format_mode => 'content-type',
@@ -10,14 +12,14 @@ net_api_declare presque => (
 net_api_method fetch_job => (
     method   => 'GET',
     path     => '/q/:queue_name',
-    params   => [qw/queue_name worker_id/],
+    params   => [qw/queue_name/],
     required => [qw/queue_name/],
 );
 
 net_api_method fetch_jobs => (
     method   => 'GET',
     path     => '/qb/:queue_name',
-    params   => [qw/queue_name worker_id batch_size/],
+    params   => [qw/queue_name batch_size/],
     required => [qw/queue_name/],
 );
 
@@ -104,15 +106,26 @@ net_api_method queue_stats => (
 net_api_method register_worker => (
     method   => 'POST',
     path     => '/w/:queue_name',
-    params   => [qw/queue_name worker_id/],
-    required => [qw/queue_name worker_id/],
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
 );
 
 net_api_method unregister_worker => (
     method   => 'DELETE',
     path     => '/w/:queue_name',
-    params   => [qw/queue_name worker_id/],
-    required => [qw/queue_name worker_id/],
+    params   => [qw/queue_name/],
+    required => [qw/queue_name/],
 );
+
+after 'new' => sub {
+    my $self = shift;
+
+    if ($self->has_worker_id) {
+        $self->useragent->add_handler('request_prepare' => sub {
+            my ($request, ) = @_;
+            $request->header('X-presque-workerid' => $self->worker_id);
+        });
+    }
+};
 
 1;
