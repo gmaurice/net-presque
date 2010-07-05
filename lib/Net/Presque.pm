@@ -86,7 +86,7 @@ net_api_method queue_size => (
 
 net_api_method worker_stats => (
     method   => 'GET',
-    path     => '/w/:worker_id',
+    path     => '/w/',
     params   => [qw/worker_id/],
     required => [qw/worker_id/],
 );
@@ -98,7 +98,7 @@ net_api_method workers_stats => (
 
 net_api_method queue_stats => (
     method   => 'GET',
-    path     => '/w/:queue_name',
+    path     => '/w/',
     params   => [qw/queue_name/],
     required => [qw/queue_name/],
 );
