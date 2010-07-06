@@ -117,14 +117,16 @@ net_api_method unregister_worker => (
     required => [qw/queue_name/],
 );
 
-after 'new' => sub {
+sub BUILD {
     my $self = shift;
 
     if ($self->has_worker_id) {
-        $self->useragent->add_handler('request_prepare' => sub {
-            my ($request, ) = @_;
-            $request->header('X-presque-workerid' => $self->worker_id);
-        });
+        $self->api_useragent->add_handler(
+            'request_prepare' => sub {
+                my ($request,) = @_;
+                $request->header('X-presque-workerid' => $self->worker_id);
+            }
+        );
     }
 };
 
