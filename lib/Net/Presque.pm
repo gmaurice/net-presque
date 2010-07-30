@@ -1,6 +1,6 @@
 package Net::Presque;
 
-use MooseX::Net::API;
+use Net::HTTP::API;
 
 has worker_id => (is => 'rw', isa => 'Str', predicate => 'has_worker_id');
 
