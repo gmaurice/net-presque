@@ -27,7 +27,7 @@ net_api_method create_job => (
     method        => 'POST',
     strict        => 0,
     path          => '/q/:queue_name',
-    params_in_url => [qw/delayed uniq/],
+    params_in_url => [qw/delayed uniq depends/],
     params        => [qw/queue_name/],
     required      => [qw/queue_name/],
 );
