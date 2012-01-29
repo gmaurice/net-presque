@@ -73,7 +73,7 @@ net_api_method queue_status => (
 net_api_method change_queue_status => (
     method   => 'POST',
     path     => '/control/:queue_name',
-    params   => [qw/queue_name/],
+    params   => [qw/queue_name action type queues/],
     required => [qw/queue_name/],
 );
 
